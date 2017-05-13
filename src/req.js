@@ -1,7 +1,7 @@
 const request = require('request');
 const Promise = require('bluebird');
 
-module.exports = (form, config)=> {
+module.exports = (form, config) => {
   form.Password = config.password;
   form.JSON = 'yes';
 
