@@ -1,7 +1,7 @@
-var request = require('request');
-var Promise = require('bluebird');
+const request = require('request');
+const Promise = require('bluebird');
 
-module.exports = function(form, config) {
+module.exports = (form, config)=> {
   form.Password = config.password;
   form.JSON = 'yes';
 
@@ -10,8 +10,8 @@ module.exports = function(form, config) {
       url: config.url,
       json: true,
       form: form
-    }, function(err, res, body) {
-      var error = createError(err, body);
+    }, (err, res, body) => {
+      const error = createError(err, body);
 
       if (error) {
         reject(error);
@@ -23,7 +23,7 @@ module.exports = function(form, config) {
 };
 
 function createError(err, body) {
-  var error = null;
+  let error = null;
   if (err) {
     error = err;
   }

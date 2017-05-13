@@ -1,19 +1,19 @@
-var req = require('../src/req');
-var _ = require('underscore');
-var accounts = ['AccountsAdd', 'AccountsDecBalance', 'AccountsDelete', 'AccountsEdit', 'AccountsGet', 'AccountsIncBalance', 'AccountsList', 'AccountsPassword', 'AccountsPermission', 'AccountsSessionKey', 'AccountsTicket'];
-var blacklist = ['BlacklistAdd', 'BlacklistDelete', 'BlacklistEdit', 'BlacklistGet', 'BlacklistList'];
-var connections = ['ConnectionsGet', 'ConnectionsList', 'ConnectionsMessage', 'ConnectionsTerminate'];
-var logs = ['LogsAddEvent', 'LogsError', 'LogsEvent', 'LogsHandHistory', 'LogsLobbyChat'];
-var ringGames = ['RingGamesAdd', 'RingGamesDelete', 'RingGamesEdit', 'RingGamesGet', 'RingGamesList', 'RingGamesMessage', 'RingGamesOffline', 'RingGamesOnline', 'RingGamesOpen', 'RingGamesPause', 'RingGamesPlaying', 'RingGamesResume', 'RingGamesWaiting'];
-var system = ['SystemAccount', 'SystemBalance', 'SystemGet', 'SystemSet', 'SystemLobbyMessage', 'SystemReboot', 'SystemStats'];
-var tournaments = ['TournamentsAdd', 'TournamentsDelete', 'TournamentsEdit', 'TournamentsGet', 'TournamentsList', 'TournamentsMessage', 'TournamentsOffline', 'TournamentsOnline', 'TournamentsOpen', 'TournamentsPause', 'TournamentsPlaying', 'TournamentsRegister', 'TournamentsRemoveNoShows', 'TournamentsResults', 'TournamentsResume', 'TournamentsStart', 'TournamentsStats', 'TournamentsUnregister', 'TournamentsWaiting'];
-var commands = accounts.concat(blacklist, connections, logs, ringGames, system, tournaments);
-var zipCommands = ['AccountsList','BlacklistList','ConnectionsList','RingGamesList','RingGamesPlaying','TournamentsList','TournamentsPlaying','TournamentsResults'];
+const req = require('../src/req');
+const _ = require('underscore');
+const accounts = ['AccountsAdd', 'AccountsDecBalance', 'AccountsDelete', 'AccountsEdit', 'AccountsGet', 'AccountsIncBalance', 'AccountsList', 'AccountsPassword', 'AccountsPermission', 'AccountsSessionKey', 'AccountsTicket'];
+const blacklist = ['BlacklistAdd', 'BlacklistDelete', 'BlacklistEdit', 'BlacklistGet', 'BlacklistList'];
+const connections = ['ConnectionsGet', 'ConnectionsList', 'ConnectionsMessage', 'ConnectionsTerminate'];
+const logs = ['LogsAddEvent', 'LogsError', 'LogsEvent', 'LogsHandHistory', 'LogsLobbyChat'];
+const ringGames = ['RingGamesAdd', 'RingGamesDelete', 'RingGamesEdit', 'RingGamesGet', 'RingGamesList', 'RingGamesMessage', 'RingGamesOffline', 'RingGamesOnline', 'RingGamesOpen', 'RingGamesPause', 'RingGamesPlaying', 'RingGamesResume', 'RingGamesWaiting'];
+const system = ['SystemAccount', 'SystemBalance', 'SystemGet', 'SystemSet', 'SystemLobbyMessage', 'SystemReboot', 'SystemStats'];
+const tournaments = ['TournamentsAdd', 'TournamentsDelete', 'TournamentsEdit', 'TournamentsGet', 'TournamentsList', 'TournamentsMessage', 'TournamentsOffline', 'TournamentsOnline', 'TournamentsOpen', 'TournamentsPause', 'TournamentsPlaying', 'TournamentsRegister', 'TournamentsRemoveNoShows', 'TournamentsResults', 'TournamentsResume', 'TournamentsStart', 'TournamentsStats', 'TournamentsUnregister', 'TournamentsWaiting'];
+const commands = accounts.concat(blacklist, connections, logs, ringGames, system, tournaments);
+const zipCommands = ['AccountsList','BlacklistList','ConnectionsList','RingGamesList','RingGamesPlaying','TournamentsList','TournamentsPlaying','TournamentsResults'];
 
 function PM(config) {
-  var methods = {};
-  _.each(commands, function(com) {
-    methods[com] = function(params) {
+  const methods = {};
+  _.each(commands, (com) => {
+    methods[com] = (params) => {
       return commandRequest(config, com, params);
     }
   });
@@ -23,7 +23,7 @@ function PM(config) {
 module.exports = PM;
 
 function commandRequest(config, command, params) {
-  var form = _.extend({Command: command}, params);
+  const form = _.extend({Command: command}, params);
 
   if (_.contains(zipCommands, command)) {
     return req(form, config).then(zipObj);
@@ -33,9 +33,9 @@ function commandRequest(config, command, params) {
 }
 
 function zipObj(body) {
-	var obj = _.pick(body, function(value, key, object) { return _.isArray(value) });
-	var keys = _.keys(obj);
-	var values = _.map(keys, function(k) { return obj[k]; });
-	var valueSlices = _.zip.apply(_, values);
+	const obj = _.pick(body, (value, key, object) => { return _.isArray(value) });
+	const keys = _.keys(obj);
+	const values = _.map(keys, (k) => { return obj[k]; });
+	const valueSlices = _.zip.apply(_, values);
 	return _.map(valueSlices, _.partial(_.object, keys));
 }
