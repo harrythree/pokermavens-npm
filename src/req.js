@@ -1,5 +1,4 @@
 const request = require('request');
-const Promise = require('bluebird');
 
 module.exports = (form, config) => {
   form.Password = config.password;
@@ -28,7 +27,7 @@ function createError(err, body) {
     error = err;
   }
 
-  if (body.Result === 'Error') {
+  if (body && body.Result === 'Error') {
     error = body.Error;
   }
   return error;

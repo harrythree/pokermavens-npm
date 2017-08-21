@@ -1,6 +1,6 @@
 {
   "name": "pokermavens",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Poker Mavens admin API wrapper",
   "main": "index.js",
   "scripts": {
@@ -18,8 +18,7 @@
     "api"
   ],
   "dependencies": {
-    "bluebird": "^3.4.1",
-    "request-promise": "^3.0.0",
+    "request": "^2.81.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

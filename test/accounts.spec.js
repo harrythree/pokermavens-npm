@@ -1,9 +1,7 @@
 var nock = require('nock');
 var expect = require('chai').expect;
-var util = require('./testUtil');
-var request = require('request-promise');
 var pmurl = 'http://mypmsite.com:8087/api';
-var PM = require('../../pokermavens');
+var PM = require('../src/pokermavens');
 
 describe('Accounts', function() {
   var pm;
@@ -25,7 +23,7 @@ describe('Accounts', function() {
       Location: 'Newland',
       Email: 'itsnew@guy.com'
     };
-    nock(util.pmurl)
+    nock(pmurl)
       .post('', form)
       .reply(200, {"Result":"Ok","Balance":0});
 
@@ -38,7 +36,7 @@ describe('Accounts', function() {
 
   it('should list accounts', function() {
     var form = {Fields:'Player,Balance'};
-    nock(util.pmurl)
+    nock(pmurl)
       .post('', form)
       .reply(200, {"Result":"Ok","Accounts":3,"Player":["Aces123","BoneCrusher","David"],"Balance":[2345,3470,1000]});
 
@@ -54,7 +52,7 @@ describe('Accounts', function() {
       Player: 'newguy',
       Amount: '100'
     };
-    nock(util.pmurl)
+    nock(pmurl)
       .post('', form)
       .reply(200, {"Result":"Ok","Amount":100,"Balance":500});
 
@@ -70,7 +68,7 @@ describe('Accounts', function() {
     var form = {
       Player: 'newguy'
     };
-    nock(util.pmurl)
+    nock(pmurl)
       .post('', form)
       .reply(200, {"Result":"Ok"});
 
@@ -85,7 +83,7 @@ describe('Accounts', function() {
       Player: 'newguy',
       Location: 'New Location'
     };
-    nock(util.pmurl)
+    nock(pmurl)
       .post('', form)
       .reply(200, {"Result":"Ok"});
 
@@ -99,7 +97,7 @@ describe('Accounts', function() {
     var form = {
       Player: 'newguy'
     };
-    nock(util.pmurl)
+    nock(pmurl)
       .post('', form)
       .reply(200, {"Result":"Ok","Player":"Aces123","Title":"","Level":"","RealName":"John","Location":"Texas","Email":"aces123@gmail.com"});
 

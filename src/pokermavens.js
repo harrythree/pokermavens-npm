@@ -13,9 +13,7 @@ const zipCommands = ['AccountsList','BlacklistList','ConnectionsList','RingGames
 function PM(config) {
   const methods = {};
   _.each(commands, (com) => {
-    methods[com] = (params) => {
-      return commandRequest(config, com, params);
-    }
+    methods[com] = (params) => commandRequest(config, com, params);
   });
   return methods;
 }
@@ -33,9 +31,9 @@ function commandRequest(config, command, params) {
 }
 
 function zipObj(body) {
-	const obj = _.pick(body, (value, key, object) => { return _.isArray(value) });
+	const obj = _.pick(body, (value, key, object) => _.isArray(value));
 	const keys = _.keys(obj);
-	const values = _.map(keys, (k) => { return obj[k]; });
+	const values = _.map(keys, (k) => obj[k]);
 	const valueSlices = _.zip.apply(_, values);
 	return _.map(valueSlices, _.partial(_.object, keys));
 }
