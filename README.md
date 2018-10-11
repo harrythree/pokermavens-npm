@@ -9,15 +9,18 @@ Poker Mavens version **4.20** is the lowest version that can be used with this m
 
 ## Installation
 
-    $ npm install pokermavens --save
+```bash
+npm install pokermavens --save
+```
 
 ## Usage
 
 Create new instance and pass in your Poker Mavens API URL and API Password.
-```javascript
-var PM = require('pokermavens');
 
-var pm = new PM({
+```javascript
+const PM = require('pokermavens');
+
+const pm = new PM({
   url: 'http://yourpmapiurl.com',
   password: 'yourapipassword'
 });
@@ -35,10 +38,10 @@ pm.AccountsAdd({
   location: 'Newland',
   email: 'itsnew@guy.com'
 })
-.then(function(result) {
+.then((result) => {
   console.log(result);
 })
-.catch(function(err) {
+.catch((err) => {
   console.log(err);
 });
 ```
